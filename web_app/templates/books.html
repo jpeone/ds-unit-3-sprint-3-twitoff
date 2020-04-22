@@ -1,21 +1,26 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    
-    <h1>My Books Page</h1>
+<!-- web_app/templates/books.html -->
+
+{% extends "layout.html" %}
+
+{% block title %}
+    <title>Books Page</title>
+{% endblock %}
+
+{% block content %}
+
+    <h2>Welcome to the Books Page</h2>
 
     <p>{{ message }}</p>
 
-    <ul>
-    {% for book in books %}
-        <li>{{ book['title']}}</li>
-    {% endfor %}
-    </ul>
+    {% if books %}
+        <ul>
+        {% for book in books %}
+            <li>{{ book["title"] }}</li>
+        {% endfor %}
+        </ul>
 
-</body>
-</html>
+    {% else %}
+        <p>Books not found.</p>
+    {% endif %}
+
+{% endblock %}
