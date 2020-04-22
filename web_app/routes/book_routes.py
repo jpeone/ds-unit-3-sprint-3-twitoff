@@ -11,16 +11,21 @@ def list_books():
         {"id": 2, "title": "Book 2"},
         {"id": 3, "title": "Book 3"},
     ]
+
+    #strictly sending a json object
     return jsonify(books)
 
-# @book_routes.route("/books")
-# def list_books_for_humans():
-#     books = [
-#         {"id": 1, "title": "Book 1"},
-#         {"id": 2, "title": "Book 2"},
-#         {"id": 3, "title": "Book 3"},
-#     ]
-#     return render_template("books.html", message="Here's some books", books=books)
+@book_routes.route("/books")
+def list_books_for_humans():
+    books = [
+        {"id": 1, "title": "Book 1"},
+        {"id": 2, "title": "Book 2"},
+        {"id": 3, "title": "Book 3"},
+    ]
+
+    #rendering an html template, rather than just raw json
+    # check templates director for the template
+    return render_template("books.html", message="Here's some books", books=books)
 
 # @book_routes.route("/books/new")
 # def new_book():
