@@ -9,12 +9,12 @@
     
     <h1>My Books Page</h1>
 
-    <p>Here are the books:</p>
+    <p>{{ message }}</p>
 
     <ul>
-        <li>Book abc</li>
-        <li>Book def</li>
-        <li>Book ghi</li>
+    {% for book in books %}
+        <li>{{ book['title']}}</li>
+    {% endfor %}
     </ul>
 
 </body>
