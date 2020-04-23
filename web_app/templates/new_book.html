@@ -1,6 +1,7 @@
 <!-- web_app/templates/new_book.html -->
 
-{% extends "layout.html" %}
+{% extends "bootstrap_layout.html" %}
+{% set active_page = "books" %}
 
 {% block content %}
 
@@ -20,6 +21,6 @@
           <option value="A3">Author 3</option>
         </select>
 
-        <button>Submit</button>
+        <button type="button" class="btn btn-dark">Submit</button>
     </form>
 {% endblock %}
