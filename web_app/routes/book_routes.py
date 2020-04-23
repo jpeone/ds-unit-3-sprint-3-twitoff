@@ -1,4 +1,5 @@
 # web_app/routes/book_routes.py
+from web_app.models import db, Book, parse_records
 
 from flask import Blueprint, jsonify, request, render_template #, flash, redirect
 
@@ -34,9 +35,14 @@ def new_book():
 @book_routes.route("/books/create", methods=["POST"])
 def create_book():
     print("FORM DATA:", dict(request.form))
-    # todo: store in database
+    
+    # INSERT INTO books ...
+    new_book = Book(title=request.form["book_title"], author_id=request.form["author_name"])
+    db.session.add(new_book)
+    db.session.commit()
+
     return jsonify({
-        "message": "BOOK CREATED OK (TODO)",
+        "message": "BOOK CREATED OK",
         "book": dict(request.form)
     })
     #flash(f"Book '{new_book.title}' created successfully!", "success")
