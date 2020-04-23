@@ -8,11 +8,14 @@ from web_app.routes.book_routes import book_routes
 #couldn't get this to work with absolute or os generated file path
 DATABASE_URI = "sqlite:///development.db"
 
+SECRET_KEY = 'super secret'
+
 def create_app():
     app = Flask(__name__)
 
     print(DATABASE_URI)
 
+    app.config['SECRET_KEY'] = SECRET_KEY #enalbe flash messaging
     app.config["SQLALCHEMY_DATABASE_URI"] = DATABASE_URI
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     db.init_app(app)
