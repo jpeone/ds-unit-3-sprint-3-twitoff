@@ -20,12 +20,28 @@ def fetch_user_data(screen_name):
     db_user.location = user.location
     db_user.followers_count = user.followers_count
     db.session.add(db_user)
-    db.session.commit()
 
     # fetch their tweets
     statuses = twitter_api.user_timeline(screen_name, tweet_mode = 'extended', count = 35, exclude_replies=True, include_rts=False)
 
-    # TODO fetch embedding for each tweet
+    # fetch embedding for each tweet
 
-    # TODO store tweets in database( w/embeddings)
+    for status in statuses:
+        print(status.full_text)
+        print("----")
+        #print(dir(status))
+        # get existing tweet from the db or initialize a new one:
+        db_tweet = Tweet.query.get(status.id) or Tweet(id=status.id)
+        db_tweet.user_id = status.author.id # or db_user.id
+        db_tweet.full_text = status.full_text
+        #embedding = basilica_client.embed_sentence(status.full_text, model="twitter") # todo: prefer to make a single request to basilica with all the tweet texts, instead of a request per tweet
+        #embedding = embeddings[counter]
+        #print(len(embedding))
+        #db_tweet.embedding = embedding
+        db.session.add(db_tweet)
+        #counter+=1
+        
+
+    # store tweets in database( w/embeddings)
+    db.session.commit()
     return jsonify({'user': user._json, 'num_tweets': len(statuses)})
