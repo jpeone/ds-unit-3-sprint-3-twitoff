@@ -24,10 +24,14 @@ def fetch_user_data(screen_name):
 
     # fetch their tweets
     statuses = twitter_api.user_timeline(screen_name, tweet_mode = 'extended', count = 35, exclude_replies=True, include_rts=False)
+    print('Statuses:', len(statuses))
 
+    tweet_texts = [status.full_text for status in statuses]
     # fetch embedding for each tweet
+    embeddings = list(basilica_connection.embed_sentences(tweet_texts, model="twitter")) 
+    print('Embeddings:', len(embeddings))
 
-    for status in statuses:
+    for index, status in enumerate(statuses):
         print(status.full_text)
         print("----")
         #print(dir(status))
@@ -36,13 +40,10 @@ def fetch_user_data(screen_name):
         db_tweet.user_id = status.author.id # or db_user.id
         db_tweet.full_text = status.full_text
 
-        #fetching corresponding embeddings.
-        embedding = basilica_connection.embed_sentence(status.full_text, model="twitter") # todo: prefer to make a single request to basilica with all the tweet texts, instead of a request per tweet
-        #embedding = embeddings[counter]
+        embedding = embeddings[index]
         print(len(embedding))
         db_tweet.embedding = embedding
         db.session.add(db_tweet)
-        #counter+=1
         
 
     # store tweets in database( w/embeddings)
