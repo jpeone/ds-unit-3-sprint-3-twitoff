@@ -23,7 +23,7 @@ def fetch_user_data(screen_name):
     db.session.add(db_user)
 
     # fetch their tweets
-    statuses = twitter_api.user_timeline(screen_name, tweet_mode = 'extended', count = 35, exclude_replies=True, include_rts=False)
+    statuses = twitter_api.user_timeline(screen_name, tweet_mode = 'extended', count = 100, exclude_replies=True, include_rts=False)
     print('Statuses:', len(statuses))
 
     tweet_texts = [status.full_text for status in statuses]
