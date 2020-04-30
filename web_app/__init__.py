@@ -1,5 +1,6 @@
 from flask import Flask
 import os
+from dotenv import load_dotenv
 
 from web_app.models import db, migrate
 from web_app.routes.home_routes import home_routes
@@ -8,18 +9,19 @@ from web_app.routes.twitter_routes import twitter_routes
 from web_app.routes.admin_routes import admin_routes
 from web_app.routes.stats_routes import stats_routes
 
-#couldn't get this to work with absolute or os generated file path
-DATABASE_URI = "sqlite:///development.db"
+load_dotenv()
 
-SECRET_KEY = 'super secret'
+#couldn't get this to work with absolute or os generated file path
+DATABASE_URL = os.getenv('DATABASE_URL')
+SECRET_KEY = os.getenv('SECRET_KEY', default = 'super secret')
 
 def create_app():
     app = Flask(__name__)
 
-    print(DATABASE_URI)
+    print(DATABASE_URL)
 
     app.config['SECRET_KEY'] = SECRET_KEY #enalbe flash messaging
-    app.config["SQLALCHEMY_DATABASE_URI"] = DATABASE_URI
+    app.config["SQLALCHEMY_DATABASE_URI"] = DATABASE_URL
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     db.init_app(app)
     migrate.init_app(app, db)

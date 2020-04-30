@@ -42,8 +42,6 @@ def twitoff_predict():
     tweet_embeddings = []
     tweet_labels = []
 
-    breakpoint()
-
     user_a = User.query.filter(User.screen_name == screen_name_a).one()
     user_b = User.query.filter(User.screen_name == screen_name_b).one()
     tweets_a = user_a.tweets
