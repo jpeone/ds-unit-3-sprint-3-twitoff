@@ -24,4 +24,5 @@ flask run
 heroku run bash
 heroku restart
 heroku logs --tail
+heroku open
 ```
